@@ -1,0 +1,40 @@
+---
+# Ensure that the NetApp Ansible collection is deployed by running ansible-galaxy collection install netapp.ontap
+- hosts: localhost
+  collections:
+    - netapp.ontap
+  gather_facts: no
+  vars:
+    login: &login
+      username: "{{ netapp_username }}"
+      password: "{{ netapp_password }}"
+      hostname: "{{ Cluster.name }}"
+      https: true
+      validate_certs: false
+  tasks:
+  - name: Create FlexVol
+    na_ontap_volume:
+      state: present
+      name: "{{ VolumeName }}"
+      vserver: "{{ Vserver }}"
+      is_infinite: False
+      junction_path: "{{ JuntionPath }}"
+      aggregate_name: "{{ aggr }}"
+      size: "{{ Size }}"
+      size_unit: "{{ SizeUnit }}"
+      space_guarantee: none
+      snapshot_policy: "{{ SnapshotPolicy }}"
+      percent_snapshot_space: 0
+      volume_security_style: "{{ SecurityStyle }}"
+      wait_for_completion: True
+      comment: "ansible created volume"
+      <<: *login
+
+  - name: Create Share
+    na_ontap_share:
+      state: present
+      share_name: "{{ ShareName }}"
+      path: "/{{ VolumeName }}"
+      vserver: vserverName
+      share_properties: browsable,oplocks,changenotify,show-previous-versions
+      symlink_properties: read_only,enable

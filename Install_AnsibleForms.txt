@@ -1,0 +1,11 @@
+mkdir /srv/apps
+cd /srv/apps
+yum install -y git
+‌‌git init
+git clone https://github.com/ansibleguy76/ansibleforms-docker.git
+cd ansibleforms-docker
+yum install -y yum-utils
+yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+yum install -y docker-ce docker-ce-cli containerd.io docker-compose
+systemctl start docker
+docker-compose up -d
