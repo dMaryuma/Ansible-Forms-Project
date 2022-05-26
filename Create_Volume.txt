@@ -29,12 +29,3 @@
       wait_for_completion: True
       comment: "ansible created volume"
       <<: *login
-
-  - name: Create Share
-    na_ontap_share:
-      state: present
-      share_name: "{{ ShareName }}"
-      path: "/{{ VolumeName }}"
-      vserver: vserverName
-      share_properties: browsable,oplocks,changenotify,show-previous-versions
-      symlink_properties: read_only,enable
