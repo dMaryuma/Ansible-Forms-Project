@@ -1,17 +1,17 @@
   - name: Create a Flexible volume
-    roles:                                         
-    - admin
-    description: This will create a flexible volume using most available aggregate
-    help: This will create a flexible volume using most available aggregate
-    categories:                                    
-    - ONTAP
-    tileClass: has-background-success-light        # a bulma background color style (https://bulma.io)
-    playbook: Create_Volume.yaml                      # playbook to launch (only if type = ansible)
-    inventory: ""                       # optional ansible inventory file
-    check: false                                   # run in checkmode or not
-    diff: false                                    # show differences
-    tags: vm,create                                # optional ansible tags (comma separated)
-    type: ansible                                 
+    showHelp: true
+    help: |
+    roles:
+      - admin
+    description: Creating Flexvol Netapp Volume
+    icon: save
+    categories:
+      - Demo
+      - Ansible
+      - Maintenance
+    tileClass: has-background-info-light
+    playbook: Create_Volume.yaml
+    type: ansible
     fields:
       - type: query
         name: Cluster
@@ -99,25 +99,8 @@
         expression: fn.fnRestBasic('get','https://aiqum.demo.netapp.com/api/v2/gateways/$(ClusterUUID)/storage/snapshot-policies','','AIQUM_REST','[.records[].name]')
         columns:
         - name 
-      - type: checkbox
-        name: CreateCifsShare
-        label: "Create Cifs Share?"
-        default: true
-      - type: text
-        name: CifsShareName
-        label: Cifs Share Name
-        default: "none"
-        placeholder: "Cifs Share Name"
-        required: true
-        minLength: 4
-        maxLength: 10
-        regex:
-          expression: "^[a-zA-Z][a-zA-z0-9]*$"
-          description: Must be alpha numeric
-        icon: user
-        dependencies:
-          - name: CreateCifsShare
-            values:
-              - true
-      
-      
+      - type: expression
+        name: cluster1_cred
+        asCredential: true
+        expression: "'cluster1_cred'"
+
