@@ -18,7 +18,7 @@
       name: "{{ VolumeName }}"
       vserver: "{{ Vserver }}"
       is_infinite: False
-      junction_path: "{{ JuntionPath }}"
+      junction_path: "{{ JunctionPath }}"
       aggregate_name: "{{ aggr }}"
       size: "{{ Size }}"
       size_unit: "{{ SizeUnit }}"
