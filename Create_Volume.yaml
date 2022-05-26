@@ -6,8 +6,8 @@
   gather_facts: no
   vars:
     login: &login
-      username: "{{ netapp_username }}"
-      password: "{{ netapp_password }}"
+      username: "{{ cluster1_cred.user }}"
+      password: "{{ cluster1_cred.password }}"
       hostname: "{{ Cluster.name }}"
       https: true
       validate_certs: false
